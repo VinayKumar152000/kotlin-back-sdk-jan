@@ -1,7 +1,3 @@
-
-import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.kotlin.dsl.create
-
 plugins {
 	java
 	`maven-publish`
@@ -33,9 +29,12 @@ publishing {
 	}
 
 	publications {
-		create<MavenPublication>("maven") {
-			from(components["java"])
+		register<MavenPublication>("gpr") {
+			groupId = "com.example"
+			artifactId = "kotlin-back-sdk"
 			version = "1.0.0"
+
+			from(components["java"])
 		}
 	}
 }
@@ -44,4 +43,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+tasks.withType<Test> {
+	useJUnitPlatform()
 }
