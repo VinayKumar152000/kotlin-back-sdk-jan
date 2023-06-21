@@ -17,6 +17,23 @@ repositories {
 }
 
 publishing {
+	publications {
+		create<MavenPublication>("mavenJava") {
+			artifactId = "common-lib"
+			groupId = "com.example"
+			from(components["java"])
+			pom {
+				name.set("Kotlin backend common library")
+				description.set("This library contains different resolutions with ktor, exposed, serialization")
+				licenses {
+					license {
+						name.set("The Apache License, Version 2.0")
+						url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+					}
+				}
+			}
+		}
+	}
 	repositories {
 		maven {
 			name = "GitHubPackages"
@@ -24,21 +41,11 @@ publishing {
 			credentials {
 				username = System.getenv("GITHUB_ACTOR")
 				password = System.getenv("GITHUB_TOKEN")
+
 			}
 		}
 	}
-
-	publications {
-		register<MavenPublication>("gpr") {
-			groupId = "com.example"
-			artifactId = "kotlin-back-sdk"
-			version = "1.0.0"
-
-			from(components["java"])
-		}
-	}
 }
-
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
