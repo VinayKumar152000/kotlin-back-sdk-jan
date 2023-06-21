@@ -17,23 +17,23 @@ repositories {
 }
 
 publishing {
-	publications {
-		create<MavenPublication>("mavenJava") {
-			artifactId = "common-lib"
-			groupId = "com.example"
-			from(components["java"])
-			pom {
-				name.set("Kotlin backend common library")
-				description.set("This library contains different resolutions with ktor, exposed, serialization")
-				licenses {
-					license {
-						name.set("The Apache License, Version 2.0")
-						url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+	publishing {
+		publications {
+			register("mavenJava", MavenPublication::class) {
+				from(components["java"])
+
+				versionMapping {
+					usage("java-api") {
+						fromResolutionOf("runtimeClasspath")
+					}
+					usage("java-runtime") {
+						fromResolutionResult()
 					}
 				}
 			}
 		}
 	}
+
 	repositories {
 		maven {
 			name = "GitHubPackages"
