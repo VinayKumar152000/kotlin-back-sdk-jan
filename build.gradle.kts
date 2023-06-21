@@ -1,3 +1,7 @@
+
+import org.gradle.api.publish.maven.MavenPublication
+import org.gradle.kotlin.dsl.create
+
 plugins {
 	java
 	`maven-publish`
@@ -40,8 +44,4 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-}
-
-tasks.withType<Test> {
-	useJUnitPlatform()
 }
