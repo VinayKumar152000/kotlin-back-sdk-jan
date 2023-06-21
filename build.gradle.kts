@@ -1,5 +1,6 @@
 plugins {
 	java
+	`maven-publish`
 	id("org.springframework.boot") version "2.7.12"
 	id("io.spring.dependency-management") version "1.0.15.RELEASE"
 }
@@ -13,6 +14,25 @@ java {
 
 repositories {
 	mavenCentral()
+}
+
+publishing {
+	repositories {
+		maven {
+			name = "GitHubPackages"
+			url = uri("https://maven.pkg.github.com/VinayKumar152000/kotlin-back-sdk")
+			credentials {
+				username = System.getenv("GITHUB_ACTOR")
+				password = System.getenv("GITHUB_TOKEN")
+			}
+		}
+	}
+
+	publications {
+		create<MavenPublication>("maven") {
+			from(components["java"])
+		}
+	}
 }
 
 dependencies {
